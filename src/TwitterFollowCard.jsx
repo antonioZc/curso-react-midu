@@ -1,6 +1,13 @@
-export function TwitterFollowCard({ userName, name, isFollowing }) {
-  // las props son inmutables, en caso de querer alterar el valor
-  // se debe crear otra variable
+import { useState } from "react";
+export function TwitterFollowCard({ userName, name, initialIsFollowing }) {
+  const [isFollowing, setisFollowing] = useState(initialIsFollowing);
+  const text = isFollowing ? "Siguiendo" : "Seguir";
+  const buttonClassName = isFollowing
+    ? "tw-followCard-button is-following"
+    : "tw-followCard-button";
+  const handleClick = () => {
+    setisFollowing(!isFollowing);
+  };
   return (
     <article className="tw-followCard">
       <header className="tw-followCard-header">
@@ -15,7 +22,10 @@ export function TwitterFollowCard({ userName, name, isFollowing }) {
         </div>
       </header>
       <aside>
-        <button className="tw-followCard-button">Seguir</button>
+        <button className={buttonClassName} onClick={handleClick}>
+          <span className="tw-followCard-text">{text}</span>
+          <span className="tw-followCard-stopFollow">Dejar de seguir</span>
+        </button>
       </aside>
     </article>
   );
